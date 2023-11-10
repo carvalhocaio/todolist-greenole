@@ -19,7 +19,9 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-INSTALLED_APPS = DJANGO_APPS
+LOCAL_APPS = ["todo"]
+
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -56,10 +58,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': config(
-        'DATABASE_URL',
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-        cast=db_url
+    "default": config(
+        "DATABASE_URL", default="sqlite:///" + str(BASE_DIR / "db.sqlite3"), cast=db_url
     )
 }
 
