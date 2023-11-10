@@ -21,7 +21,10 @@ DJANGO_APPS = [
 
 LOCAL_APPS = ["todo"]
 
-THIRDS_APP = ["rest_framework"]
+THIRDS_APP = [
+    "rest_framework",
+    "django_filters",
+]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRDS_APP
 
@@ -102,3 +105,9 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# REST Framework settings
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"]
+}
