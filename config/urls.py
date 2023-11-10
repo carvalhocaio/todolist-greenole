@@ -1,9 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib import admin
 from django.contrib.auth.models import Group, User
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/", include("todo.urls"))
 ]
 
 admin.site.site_header = "Greenole Admin"

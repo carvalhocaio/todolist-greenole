@@ -21,7 +21,9 @@ DJANGO_APPS = [
 
 LOCAL_APPS = ["todo"]
 
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
+THIRDS_APP = ["rest_framework"]
+
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRDS_APP
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
