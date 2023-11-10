@@ -7,8 +7,14 @@ from todo import models, serializers
 
 
 class ToDoViewSet(viewsets.ModelViewSet):
-    queryset = models.ToDo.objects.all().order_by("-created_at")
+    queryset = models.ToDo.objects.all()
     serializer_class = serializers.ToDoSerializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
     filterset_fields = ["status"]
     search_fields = ["title", "description"]
+    ordering_fields = "__all__"
+    ordering = ["-created_at"]
