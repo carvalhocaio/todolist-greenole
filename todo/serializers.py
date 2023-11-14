@@ -1,17 +1,24 @@
 from rest_framework import serializers
 
-from todo import models
+from todo import models, validators
 
 
 class ToDoSerializer(serializers.ModelSerializer):
-    status_value = serializers.CharField(source="get_status_display", read_only=True)
-    status = serializers.CharField(required=False, write_only=True)
+    status_display = serializers.CharField(source="get_status_display", read_only=True)
+    status = serializers.CharField(
+        required=False,
+        write_only=True,
+        help_text="Status of the ToDo (IN_PROGRESS by default)",
+    )
 
     class Meta:
         model = models.ToDo
         fields = "__all__"
 
     def create(self, validated_data):
+        if "status" in validated_data:
+            validators.status_validator(validated_data["status"])
+
         validated_data["status"] = validated_data.get("status", "IN_PROGRESS")
         return models.ToDo.objects.create(**validated_data)
 
@@ -20,13 +27,7 @@ class ToDoSerializer(serializers.ModelSerializer):
         instance.description = validated_data.get("description", instance.description)
 
         new_status = validated_data.get("status", instance.status)
-        if new_status not in dict(models.ToDo.STATUS_CHOICES):
-            allowed_values = [choice[0] for choice in models.ToDo.STATUS_CHOICES]
-            raise serializers.ValidationError(
-                {
-                    "error": f"Invalid status value! Allowed values are: {', '.join(allowed_values)}"
-                }
-            )
+        validators.status_validator(new_status)
         instance.status = new_status
 
         instance.save()
