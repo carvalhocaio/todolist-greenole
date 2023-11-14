@@ -15,10 +15,12 @@ dj-database-url = "^2.1.0"
 djangorestframework = "^3.14.0"
 django-filter = "^23.3"
 drf-spectacular = {extras = ["sidecar"], version = "^0.26.5"}
+django-redis = "^5.4.0"
 
 
 [tool.poetry.group.dev.dependencies]
 ipdb = "^0.13.13"
+black = "^23.11.0"
 
 [build-system]
 requires = ["poetry-core"]

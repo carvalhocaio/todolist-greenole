@@ -6,7 +6,7 @@ info:
 paths:
   /api/todos:
     get:
-      operationId: api_todos_list
+      operationId: todos_list
       parameters:
       - name: limit
         required: false
@@ -43,7 +43,7 @@ paths:
           * `IN_PROGRESS` - in progress
           * `CONCLUDED` - concluded
       tags:
-      - api
+      - todos
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -56,9 +56,9 @@ paths:
                 $ref: '#/components/schemas/PaginatedToDoList'
           description: ''
     post:
-      operationId: api_todos_create
+      operationId: todos_create
       tags:
-      - api
+      - todos
       requestBody:
         content:
           application/json:
@@ -84,7 +84,7 @@ paths:
           description: ''
   /api/todos/{id}:
     get:
-      operationId: api_todos_retrieve
+      operationId: todos_retrieve
       parameters:
       - in: path
         name: id
@@ -93,7 +93,7 @@ paths:
         description: A unique integer value identifying this ToDo.
         required: true
       tags:
-      - api
+      - todos
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -106,7 +106,7 @@ paths:
                 $ref: '#/components/schemas/ToDo'
           description: ''
     put:
-      operationId: api_todos_update
+      operationId: todos_update
       parameters:
       - in: path
         name: id
@@ -115,7 +115,7 @@ paths:
         description: A unique integer value identifying this ToDo.
         required: true
       tags:
-      - api
+      - todos
       requestBody:
         content:
           application/json:
@@ -140,7 +140,7 @@ paths:
                 $ref: '#/components/schemas/ToDo'
           description: ''
     patch:
-      operationId: api_todos_partial_update
+      operationId: todos_partial_update
       parameters:
       - in: path
         name: id
@@ -149,7 +149,7 @@ paths:
         description: A unique integer value identifying this ToDo.
         required: true
       tags:
-      - api
+      - todos
       requestBody:
         content:
           application/json:
@@ -173,7 +173,7 @@ paths:
                 $ref: '#/components/schemas/ToDo'
           description: ''
     delete:
-      operationId: api_todos_destroy
+      operationId: todos_destroy
       parameters:
       - in: path
         name: id
@@ -182,7 +182,7 @@ paths:
         description: A unique integer value identifying this ToDo.
         required: true
       tags:
-      - api
+      - todos
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -218,7 +218,7 @@ components:
         id:
           type: integer
           readOnly: true
-        status_value:
+        status_display:
           type: string
           readOnly: true
         status:
@@ -245,7 +245,7 @@ components:
         id:
           type: integer
           readOnly: true
-        status_value:
+        status_display:
           type: string
           readOnly: true
         status:
@@ -269,7 +269,7 @@ components:
       required:
       - created_at
       - id
-      - status_value
+      - status_display
       - title
       - updated_at
   securitySchemes:
