@@ -20,6 +20,15 @@ class ToDoViewSet(viewsets.ModelViewSet):
     ordering_fields = "__all__"
     ordering = ["-created_at"]
 
+    def get_serializer(self, *args, **kwargs):
+        if "data" in kwargs:
+            data = kwargs["data"]
+
+            if isinstance(data, list):
+                kwargs["many"] = True
+
+        return super(ToDoViewSet, self).get_serializer(*args, **kwargs)
+
     def list(self, request, *args, **kwargs):
         limit = request.query_params.get("limit", None)
         offset = request.query_params.get("offset", None)
