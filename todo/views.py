@@ -1,4 +1,5 @@
 from django.core.cache import cache
+from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
 from rest_framework.pagination import LimitOffsetPagination
@@ -34,6 +35,24 @@ class ToDoViewSet(viewsets.ModelViewSet):
         offset = request.query_params.get("offset", None)
         status_filter = request.query_params.get("status", None)
         ordering = request.query_params.get("ordering", None)
+        search_query = request.query_params.get("search", None)
+
+        if search_query:
+            queryset = models.ToDo.objects.filter(
+                Q(title__icontains=search_query)
+                | Q(description__icontains=search_query)
+            )
+
+            paginator = LimitOffsetPagination()
+            result_page = paginator.paginate_queryset(queryset, request)
+            serializer = self.get_serializer(result_page, many=True)
+            data = {
+                "count": queryset.count(),
+                "next": paginator.get_next_link(),
+                "previous": paginator.get_previous_link(),
+                "results": serializer.data,
+            }
+            return Response(data)
 
         cache_key = f"todo_list_{limit}_{offset}_{status_filter}_{ordering}"
 
