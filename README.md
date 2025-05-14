@@ -5,12 +5,13 @@ Greenole test app
 ## Requisites
 
 - Python >= 3.11
-- Poetry
+- Poetry (https://python-poetry.org/docs/)
 - Django >= 4.2.7
 - Docker
 
 ## Execute project
 
+- Install poetry shell: `pipx inject poetry poetry-plugin-shell`
 - Start the poetry shell: `poetry shell`
 - Install the dependencies: `poetry install`
 - Rename `.env-sample` for `.env` and fill in the variable values, mainly to `SECRET_KEY`, `DATABASE_URL`
